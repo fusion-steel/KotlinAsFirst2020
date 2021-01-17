@@ -246,7 +246,13 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val chars = convert(n, base).map { num ->
+        if (num <= 9) Character.forDigit(num, 10)
+        else (num + 87).toChar()
+    }
+    return chars.joinToString(separator = "")
+}
 
 /**
  * Средняя (3 балла)
