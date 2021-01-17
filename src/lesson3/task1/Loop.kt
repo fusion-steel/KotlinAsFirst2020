@@ -72,7 +72,28 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var counter = 1
+    var number = n
+
+    while (number > 9) {
+        counter++
+        number /= 10
+    }
+    return counter
+}
+
+/**
+ * Простая
+ *
+ * Рекурсивная реализация функции подсчета количества цифр в заданном числе
+ */
+fun digitNumberRecursive(n: Int): Int {
+    when {
+        n / 10 != 0 -> 1 + digitNumberRecursive(n / 10)
+    }
+    return 1
+}
 
 /**
  * Простая (2 балла)
@@ -80,14 +101,47 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var fib1 = 1
+    var fib2 = 1
+    var i = 0
+
+    while (i < n - 2) {
+//        val fibSum = fib1 + fib2
+//        fib1 = fib2                             // обмен значений переменных через третью переменную
+//        fib2 = fibSum
+//        i++
+        fib2 = (fib1 + fib2).also { fib1 = fib2 } // реализация обмена значений переменных в Kotlin
+        i++
+    }
+    return fib2
+}
+
+// Рекурсивная реализация функции вычисления числа Фибоначчи с номером n
+fun fibRecursive(n: Int): Int {
+    if (n in 1..2) return 1
+    return fibRecursive(n - 1) + fibRecursive(n - 2)
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var res = n
+    if (n % 2 == 0)
+        res = 2
+    else {
+        for (j in 3..sqrt(n.toDouble()).toInt() step 2) {
+            if (n % j == 0) {
+                res = j
+                break
+            }
+        }
+    }
+    return res
+}
 
 /**
  * Простая (2 балла)
@@ -120,7 +174,28 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+@Suppress("NAME_SHADOWING")
+fun lcm(m: Int, n: Int): Int {
+//    val max = maxOf(m, n)
+//    var k = max
+//
+//    while (true) {
+//        if (k % m == 0 && k % n == 0) return k
+//        else k += max
+//    }
+    // реализация через алгоритм Евклида
+    var m = m
+    var n = n
+    val mul = m * n
+    while (m != 0 && n != 0) {
+        if (m > n) {
+            m %= n
+        } else {
+            n %= m
+        }
+    }
+    return mul / (m + n)
+}
 
 /**
  * Средняя (3 балла)
