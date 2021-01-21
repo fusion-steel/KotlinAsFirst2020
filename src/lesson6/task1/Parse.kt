@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +76,35 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val months = mapOf(
+        "января" to "01",
+        "февраля" to "02",
+        "марта" to "03",
+        "апреля" to "04",
+        "мая" to "05",
+        "июня" to "06",
+        "июля" to "07",
+        "августа" to "08",
+        "сентября" to "09",
+        "октября" to "10",
+        "ноября" to "11",
+        "декабря" to "12"
+    )
+    val dateList = str.split(" ")
+    if (dateList.size == 3) {
+        var (day, month, year) = dateList
+        try {
+            month = months[month]!!
+        } catch (e: NullPointerException) {
+            return ""
+        }
+        if (day.toInt() <= daysInMonth(month.toInt(), year.toInt())) {
+            return "${twoDigitStr(day.toInt())}.$month.$year"
+        }
+    }
+    return ""
+}
 
 /**
  * Средняя (4 балла)
