@@ -103,7 +103,18 @@ fun dateStrToDigit(str: String): String {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val formatter = DateTimeFormatter
+        .ofPattern("dd.MM.uuuu")
+        .withLocale(Locale("RU"))
+        .withResolverStyle(ResolverStyle.STRICT)
+    try {
+        val localDate = LocalDate.parse(digital, formatter)
+        return localDate.format(DateTimeFormatter.ofPattern("d MMMM uuuu"))
+    } catch (e: DateTimeParseException) {
+        return ""
+    }
+}
 
 /**
  * Средняя (4 балла)
