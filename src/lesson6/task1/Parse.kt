@@ -2,7 +2,6 @@
 
 package lesson6.task1
 
-import lesson2.task2.daysInMonth
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
@@ -82,12 +81,12 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val formatter: DateTimeFormatter = DateTimeFormatter
+    val formatter = DateTimeFormatter
         .ofPattern("d MMMM uuuu")
         .withLocale(Locale("RU"))
         .withResolverStyle(ResolverStyle.STRICT)
     try {
-        val localDate: LocalDate = LocalDate.parse(str, formatter)
+        val localDate = LocalDate.parse(str, formatter)
         return localDate.format(DateTimeFormatter.ofPattern("dd.MM.uuuu"))
     } catch (e: DateTimeParseException) {
         return ""
