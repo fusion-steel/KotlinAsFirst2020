@@ -130,7 +130,17 @@ fun dateDigitToStr(digital: String): String {
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    val phoneT = phone.trim()
+    val firstChar = phoneT.first()
+    val firstDrop = phoneT.drop(1)
+
+    if (firstChar == '+' || firstChar.isDigit()) {
+        if ("()" !in firstDrop && '+' !in firstDrop)
+            return firstChar + firstDrop.filterNot { it in "-_+() " }
+    }
+    return ""
+}
 
 /**
  * Средняя (5 баллов)
