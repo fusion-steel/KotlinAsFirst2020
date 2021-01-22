@@ -3,6 +3,11 @@
 package lesson6.task1
 
 import lesson2.task2.daysInMonth
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
+import java.time.format.ResolverStyle
+import java.util.*
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -77,29 +82,16 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val months = mapOf(
-        "января" to "01",
-        "февраля" to "02",
-        "марта" to "03",
-        "апреля" to "04",
-        "мая" to "05",
-        "июня" to "06",
-        "июля" to "07",
-        "августа" to "08",
-        "сентября" to "09",
-        "октября" to "10",
-        "ноября" to "11",
-        "декабря" to "12"
-    )
-    val dateList = str.split(" ")
-    if (dateList.size != 3) return ""
-    val (day, monthWord, year) = dateList
-    val month = months[monthWord] ?: return ""
-
-    if (day.toInt() <= daysInMonth(month.toInt(), year.toInt())) {
-        return "${twoDigitStr(day.toInt())}.$month.$year"
+    val formatter: DateTimeFormatter = DateTimeFormatter
+        .ofPattern("d MMMM uuuu")
+        .withLocale(Locale("RU"))
+        .withResolverStyle(ResolverStyle.STRICT)
+    try {
+        val localDate: LocalDate = LocalDate.parse(str, formatter)
+        return localDate.format(DateTimeFormatter.ofPattern("dd.MM.uuuu"))
+    } catch (e: DateTimeParseException) {
+        return ""
     }
-    return ""
 }
 
 /**
