@@ -92,16 +92,12 @@ fun dateStrToDigit(str: String): String {
         "декабря" to "12"
     )
     val dateList = str.split(" ")
-    if (dateList.size == 3) {
-        var (day, month, year) = dateList
-        try {
-            month = months[month]!!
-        } catch (e: NullPointerException) {
-            return ""
-        }
-        if (day.toInt() <= daysInMonth(month.toInt(), year.toInt())) {
-            return "${twoDigitStr(day.toInt())}.$month.$year"
-        }
+    if (dateList.size != 3) return ""
+    val (day, monthWord, year) = dateList
+    val month = months[monthWord] ?: return ""
+
+    if (day.toInt() <= daysInMonth(month.toInt(), year.toInt())) {
+        return "${twoDigitStr(day.toInt())}.$month.$year"
     }
     return ""
 }
