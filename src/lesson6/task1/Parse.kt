@@ -158,7 +158,7 @@ fun bestLongJump(jumps: String): Int {
         canContain.dropLast(3).any { it in jumps }) {
         val jumpsList = jumps
             .split(' ')
-            .filter { it.any { it.isDigit() } }
+            .filter { it.all { i -> i.isDigit() } }
             .map { it.toInt() }
         return jumpsList.maxOrNull() ?: 0
     }
