@@ -170,10 +170,13 @@ fun bestLongJump(jumps: String): Int {
  * вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    val reg = Regex("""\d+ \+""")
-    val resList = reg.findAll(jumps).toList()
-    val intList = resList.map { it.value.dropLast(2).toInt() }
-    return intList.maxOrNull() ?: -1
+    if (jumps.matches("""[\d\s\+%-]+""".toRegex())) {
+        val reg = Regex("""\d+ \+""")
+        val resList = reg.findAll(jumps).toList()
+        val intList = resList.map { it.value.dropLast(2).toInt() }
+        return intList.maxOrNull() ?: -1
+    }
+    return -1
 }
 
 /**
