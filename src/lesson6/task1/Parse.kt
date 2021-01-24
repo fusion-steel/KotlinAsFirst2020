@@ -169,7 +169,12 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val reg = Regex("""\d+ \+""")
+    val resList = reg.findAll(jumps).toList()
+    val intList = resList.map { it.value.dropLast(2).toInt() }
+    return intList.maxOrNull() ?: -1
+}
 
 /**
  * Сложная (6 баллов)
