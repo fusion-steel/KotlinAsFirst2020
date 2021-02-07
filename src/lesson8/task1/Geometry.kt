@@ -119,7 +119,7 @@ fun diameter(vararg points: Point): Segment {
     if (points.size >= 2) {
         for (begin in points) {
             for (end in points) {
-                if (begin != end) {
+                if (begin != end && Segment(begin, end) !in segments) {
                     segments.add(Segment(begin, end))
                 }
             }
@@ -215,7 +215,20 @@ fun bisectorByPoints(a: Point, b: Point): Line {
  *
  * Если в списке менее двух окружностей, бросить IllegalArgumentException
  */
-fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
+fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
+    val circleList = mutableListOf<Pair<Circle, Circle>>()
+    if (circles.size >= 2) {
+        for (i in circles) {
+            for (j in circles) {
+                if (i != j && Pair(i, j) !in circleList)
+                    circleList.add(Pair(i, j))
+            }
+        }
+    } else {
+        throw IllegalArgumentException("Для расчета необходимо минимум 2 окружности.")
+    }
+    return circleList.minByOrNull { it.first.distance(it.second) }!!
+}
 
 /**
  * Сложная (5 баллов)
