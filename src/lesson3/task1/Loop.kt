@@ -222,7 +222,16 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var num = n
+    var rev = 0
+    while (num > 0) {
+        val dig = num % 10
+        rev = rev * 10 + dig
+        num /= 10
+    }
+    return rev
+}
 
 /**
  * Средняя (3 балла)
@@ -233,7 +242,7 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 
 /**
  * Средняя (3 балла)
